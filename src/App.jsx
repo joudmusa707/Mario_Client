@@ -1,9 +1,10 @@
 import "./App.css";
-import GameUI from "./pages/GamePage/GameUI";
+
+import HomePage from "./pages/HomePage/HomePage";
 function App() {
   return (
     <>
-      <GameUI />
+      <HomePage />
     </>
   );
 }
