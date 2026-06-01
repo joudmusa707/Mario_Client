@@ -1,7 +1,14 @@
 import "./OverLayCard.css";
-
+import { useState, useEffect } from "react";
 function OverLayCard({ gameState, score, onRestart, onNextLevel }) {
   const isWin = gameState === "win";
+  const [quote, setQuote] = useState("");
+  useEffect(() => {
+    fetch("https://api.kanye.rest/")
+      .then((res) => res.json())
+      .then((data) => setQuote(data.quote))
+      .catch((err) => console.error("Error fetching quote:", err));
+  }, [gameState]);
 
   return (
     <div className="overlay-card">
@@ -11,7 +18,9 @@ function OverLayCard({ gameState, score, onRestart, onNextLevel }) {
       </h1>
 
       <p className="overlay-score">Score: {score}</p>
-
+      <div>
+        <p className="positive-message">{quote}</p>
+      </div>
       <div className="overlay-actions">
         <button onClick={onRestart} className="btn btn-restart">
           Restart

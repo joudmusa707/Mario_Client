@@ -12,7 +12,7 @@
 
 /* Dedicated row container for the back button */
 .back-btn-row {
-  margin-bottom: 12px; /* Small clean spacing before metrics drop below it */
+  margin-bottom: 2px; /* Small clean spacing before metrics drop below it */
 }
 
 /* Full-width HUD containing Score and Hearts */
@@ -102,6 +102,5 @@
   }
   .back-btn-row {
     padding-left: 12px !important;
-    margin-bottom: 8px;
   }
 }

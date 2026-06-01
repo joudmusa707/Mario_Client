@@ -62,3 +62,15 @@
 .btn.btn-next:hover {
   background-color: #45a049 !important;
 }
+/* ==========================================================================
+   Motivational API Text Box Adjustments
+   ========================================================================== */
+
+.positive-message {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4a5568;
+  font-style: italic;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
