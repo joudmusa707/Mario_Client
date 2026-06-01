@@ -3,7 +3,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
+  z-index: 100; /* Increased to make sure it sits above the canvas completely */
   background-color: white;
   padding: 40px;
   border-radius: 20px;
@@ -43,19 +43,22 @@
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  color: white;
+  color: white !important; /* Ensures text stays white over Bootstrap text colors */
 }
 
-.btn-restart {
-  background-color: #333;
+/* FIXED: Chained selectors (.btn.btn-...) to beat Bootstrap's specificity priority */
+.btn.btn-restart {
+  background-color: #333333 !important;
 }
 
-.btn-next {
-  background-color: #4caf50;
+.btn.btn-next {
+  background-color: #4caf50 !important;
 }
-.btn-restart:hover {
-  background-color: #555;
+
+.btn.btn-restart:hover {
+  background-color: #555555 !important;
 }
-.btn-next:hover {
-  background-color: #45a049;
+
+.btn.btn-next:hover {
+  background-color: #45a049 !important;
 }

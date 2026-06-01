@@ -4,24 +4,16 @@ import Score from "../../components/Score/Score.jsx";
 import Lives from "../../components/Lives/Lives.jsx";
 import GameOverlay from "../../components/OverLayCard/OverLayCard.jsx";
 import "./GameUI.css";
+
 const GameUI = () => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
   const [gameState, setGameState] = useState("playing");
   const [currentLevel, setCurrentLevel] = useState(0);
 
-  // Reset function for coins/score
-  const handleScoreReset = () => {
-    setScore(0);
-  };
-
-  const handleCoinCollect = (coins) => {
-    setScore((prev) => prev + coins);
-  };
-
-  const handleEnemyKill = (points = 50) => {
-    setScore((prev) => prev + points);
-  };
+  const handleScoreReset = () => setScore(0);
+  const handleCoinCollect = (coins) => setScore((prev) => prev + coins);
+  const handleEnemyKill = (points = 50) => setScore((prev) => prev + points);
 
   const handlePlayerDeath = () => {
     setLives((prev) => {
@@ -35,50 +27,39 @@ const GameUI = () => {
     handleScoreReset();
   };
 
-  const handleWin = () => {
-    setGameState("win");
-  };
+  const handleWin = () => setGameState("win");
+
   const handleNextLevel = () => {
-    setCurrentLevel((prev) => {
-      if (prev < 5) {
-        return prev + 1;
-      }
-
-      return prev;
-    });
-
+    setCurrentLevel((prev) => (prev < 5 ? prev + 1 : prev));
     setScore(0);
-
     setLives(3);
-
     setGameState("playing");
   };
 
   const resetGame = () => {
     setScore(0);
-
     setLives(3);
-
     setGameState("playing");
   };
 
   return (
     <div className="gameUI-parent-container d-flex flex-column align-items-center justify-content-center p-3">
-      {/* Floating Glassmorphic Back Button */}
-      <button
-        className="game-back-btn"
-        aria-label="Go back"
-        onClick={() => window.history.back()}
-      >
-        <i className="bi bi-arrow-left"></i>
-      </button>
-
-      {/* Full-width HUD that stays separated from the canvas top */}
+      {" "}
+      {/* Top Controls Row: Keeps the back button entirely isolated */}
+      <div className="back-btn-row w-100 d-flex justify-content-start px-4">
+        <button
+          className="game-back-btn"
+          aria-label="Go back"
+          onClick={() => window.history.back()}
+        >
+          <i className="bi bi-arrow-left"></i>
+        </button>
+      </div>
+      {/* Metrics Row: Purely contains game states across the screen */}
       <div className="hud-header d-flex justify-content-between align-items-center w-100 px-4">
         <Score score={score} />
         <Lives lives={lives} />
       </div>
-
       {/* Centralized Game Container */}
       <div className="game-container w-100 d-flex justify-content-center align-items-center">
         {gameState !== "playing" && (

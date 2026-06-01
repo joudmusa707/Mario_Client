@@ -10,12 +10,17 @@
   font-family: "Inter", system-ui, sans-serif;
 }
 
-/* Full-width HUD that stays separated from the canvas top */
+/* Dedicated row container for the back button */
+.back-btn-row {
+  margin-bottom: 12px; /* Small clean spacing before metrics drop below it */
+}
+
+/* Full-width HUD containing Score and Hearts */
 .hud-header {
   z-index: 10;
   position: relative;
-  max-width: 100%; /* Spans all the way across the display */
-  margin-bottom: 24px; /* Creates an untouchable visual gap above the canvas */
+  max-width: 100%;
+  margin-bottom: 24px;
   user-select: none;
 }
 
@@ -32,8 +37,9 @@
 /* Canvas Responsiveness Wrapper */
 .canvas-wrapper {
   max-width: 100%;
-  /* Ensures clearance for HUD metrics on all device viewports */
-  max-height: calc(100vh - 120px);
+  max-height: calc(
+    100vh - 160px
+  ); /* Slightly increased offset for the double row top */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,11 +55,8 @@
   border-radius: 16px;
 }
 
-/* Floating Back Button Alignment and Glassmorphism Style */
+/* Back Button Glassmorphism Style - FIXED: Removed absolute position entirely */
 .game-back-btn {
-  position: absolute;
-  top: 24px;
-  left: 24px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -67,7 +70,6 @@
   color: #ffffff;
   font-size: 1.1rem;
   cursor: pointer;
-  z-index: 20; /* Ensures it stays layered on top of all backgrounds */
   transition: all 0.2s ease-in-out;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -85,18 +87,21 @@
 /* Responsive adjustment for small mobile viewports */
 @media (max-width: 576px) {
   .game-back-btn {
-    top: 12px;
-    left: 12px;
     width: 36px;
     height: 36px;
     font-size: 1rem;
   }
 }
+
 /* Mobile Screens Smooth Scaling */
 @media (max-width: 768px) {
   .hud-header {
-    margin-bottom: 12px; /* Tightens gap slightly for mobile landscape views */
+    margin-bottom: 12px;
     padding-left: 12px !important;
     padding-right: 12px !important;
+  }
+  .back-btn-row {
+    padding-left: 12px !important;
+    margin-bottom: 8px;
   }
 }

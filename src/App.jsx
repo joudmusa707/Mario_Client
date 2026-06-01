@@ -17,7 +17,7 @@ function App() {
     }
   }, []);
 
-  const handleSignUp = (userData) => {
+  const handleAuth = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };
@@ -28,15 +28,16 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
+          <Route
+            path="/Login"
+            element={
+              user ? <Navigate to="/Game" /> : <Login onLogin={handleAuth} />
+            }
+          />
           <Route
             path="/SignUp"
             element={
-              user ? (
-                <Navigate to="/Game" />
-              ) : (
-                <SignUp onSignUp={handleSignUp} />
-              )
+              user ? <Navigate to="/Game" /> : <SignUp onSignUp={handleAuth} />
             }
           />
           <Route path="/Game" element={<GameUI />} />
