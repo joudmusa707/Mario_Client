@@ -1,0 +1,178 @@
+/* Core Structural Layout Configurations */
+.game-bg {
+  background: radial-gradient(circle at center, #3c126d 0%, #17022b 100%);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.max-width-profile {
+  max-width: 960px;
+  width: 100%;
+}
+
+/* Navbar Navigation Elements Styling */
+.back-arrow-btn {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 8px 14px;
+  color: rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.2s ease;
+}
+
+.back-arrow-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+}
+
+.profile-title-text {
+  font-size: 2.2rem;
+  letter-spacing: 0.5px;
+}
+
+.action-btn {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+}
+
+.action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.btn-logout {
+  background-color: #dc2626 !important;
+  border: none !important;
+  border-radius: 10px;
+}
+
+.btn-logout:hover {
+  background-color: #b91c1c !important;
+}
+
+/* Master Transparent Panels Properties */
+.profile-master-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+}
+
+/* User Graphic Avatar Presentation */
+.profile-avatar-box {
+  width: 85px;
+  height: 85px;
+  border-radius: 18px;
+  font-size: 2.4rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #ec4899 100%);
+}
+
+.user-display-name {
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+.text-secondary-white {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Horizontal User Stat Dashboard Cards */
+.stat-pill {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-icon-wrapper {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.lvl-purple {
+  background-color: #a855f7;
+  color: #fff;
+}
+.coin-orange {
+  background-color: #f97316;
+  color: #fff;
+}
+.cmp-green {
+  background-color: #22c55e;
+  color: #fff;
+}
+
+.stat-lbl {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.stat-val {
+  font-size: 1.25rem;
+  line-height: 1.1;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Submodules Grid Content Elements */
+.block-title {
+  font-size: 1.35rem;
+}
+
+.achievement-counter-badge {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+
+/* Achievement Cell Cards Layout Matrices */
+.achievement-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  min-height: 140px;
+  transition: all 0.2s ease;
+}
+
+.locked-state {
+  opacity: 0.35;
+}
+
+.achievement-icon-placeholder i {
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Footer Control Core Anchors */
+.global-back-btn {
+  background-color: #2563eb !important;
+  border: none !important;
+  border-radius: 10px;
+  min-width: 160px;
+  transition: background-color 0.2s ease;
+}
+
+.global-back-btn:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* Responsive Scaling Breakpoint Tweaks */
+@media (max-width: 768px) {
+  .stat-pill {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px !important;
+    padding: 12px 6px !important;
+  }
+  .stat-lbl {
+    font-size: 0.65rem;
+  }
+  .stat-val {
+    font-size: 1.1rem;
+  }
+}

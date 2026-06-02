@@ -9,6 +9,7 @@ import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import LevelSelection from "./pages/LevelSelectionPage/LevelSelection.jsx";
 import Leaderboard from "./pages/LeaderboardPage/leadboardPage.jsx";
+import Profile from "./pages/ProfilePage/Profile.jsx";
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -74,6 +75,16 @@ function App() {
           <Route
             path="/leaderboard"
             element={user ? <Leaderboard /> : <Navigate to="/Login" />}
+          />
+          <Route
+            path="/Profile"
+            element={
+              user ? (
+                <Profile user={user} handleLogout={handleLogout} />
+              ) : (
+                <Navigate to="/Login" />
+              )
+            }
           />
         </Routes>
       </Router>
