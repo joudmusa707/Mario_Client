@@ -142,9 +142,8 @@ const useGameEngine = (
     }
 
     // Initialize the assets inside refs once loop connects
-    if (!playerRef.current) {
-      init();
-    }
+
+    init();
 
     // ------------------------------------------------------------------------
     // Core Frame Animation Loop (ALWAYS RUNS TO PREVENT WHITE SCREEN)
@@ -160,6 +159,7 @@ const useGameEngine = (
       platformsRef.current.forEach((platform) => platform.draw(ctx));
 
       const player = playerRef.current;
+      if (!player) return;
 
       // ALWAYS DRAW: Coins (Only parse collecting engine rules if playing)
       if (gameState === "playing") {
@@ -304,9 +304,7 @@ const useGameEngine = (
         // Win Condition Boundary Verification Check
         if (scrollOffset.current > currentLevelRef.current.winOffset) {
           onWin();
-          levelIndexRef.current += 1;
-          if (levelIndexRef.current >= levels.length) return;
-          init();
+          return;
         }
 
         // Out of Bounds Pit Death Checks

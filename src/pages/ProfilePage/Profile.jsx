@@ -61,7 +61,9 @@ const Profile = ({ user, handleLogout }) => {
                       <small className="d-block text-secondary-white stat-lbl">
                         Current Level
                       </small>
-                      <span className="fw-bold stat-val">{user.level}</span>
+                      <span className="fw-bold stat-val">
+                        {user.currentlevel}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -94,7 +96,7 @@ const Profile = ({ user, handleLogout }) => {
                         Completed
                       </small>
                       <span className="fw-bold stat-val">
-                        {user.completedLevels}
+                        {user.completedlevel}
                       </span>
                     </div>
                   </div>

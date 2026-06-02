@@ -20,11 +20,11 @@ const Level2 = ({
 
     new Platform(platformImg.width + 100, 470, platformImg),
 
-    new Platform(platformImg.width * 2 + 350, 420, platformImg),
+    new Platform(platformImg.width * 2 + 50, 420, platformImg),
 
     new Platform(platformImg.width * 3 + 700, 350, platformImg),
 
-    new Platform(platformImg.width * 4 + 900, 470, platformImg),
+    new Platform(platformImg.width * 4 + 700, 470, platformImg),
 
     new Platform(
       platformImg.width * 5 + 1200,

@@ -1,8 +1,11 @@
 import "./OverLayCard.css";
 import { useState, useEffect } from "react";
-function OverLayCard({ gameState, score, onRestart, onNextLevel }) {
+import { Link } from "react-router-dom"; // Import Link
+
+function OverLayCard({ gameState, score, onRestart }) {
   const isWin = gameState === "win";
   const [quote, setQuote] = useState("");
+
   useEffect(() => {
     fetch("https://api.kanye.rest/")
       .then((res) => res.json())
@@ -12,7 +15,6 @@ function OverLayCard({ gameState, score, onRestart, onNextLevel }) {
 
   return (
     <div className="overlay-card">
-      {/* Dynamic template literal to handle the conditional color class */}
       <h1 className={`overlay-title ${isWin ? "win-text" : "lose-text"}`}>
         {isWin ? "LEVEL COMPLETE" : "GAME OVER"}
       </h1>
@@ -27,9 +29,13 @@ function OverLayCard({ gameState, score, onRestart, onNextLevel }) {
         </button>
 
         {isWin && (
-          <button onClick={onNextLevel} className="btn btn-next">
-            Next Level
-          </button>
+          /* Change this from a button execution to a routing Link wrapper */
+          <Link
+            to="/LevelSelection"
+            className="btn btn-next text-decoration-none"
+          >
+            Back to Levels
+          </Link>
         )}
       </div>
     </div>

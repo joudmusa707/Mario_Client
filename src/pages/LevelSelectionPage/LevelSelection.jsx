@@ -45,12 +45,12 @@ const LevelSelection = ({ user, handleLogout }) => {
         <div className="user-status-card d-flex justify-content-between align-items-center p-3 mb-4 rounded-4">
           <div className="d-flex align-items-center gap-3">
             <div className="avatar-box d-flex align-items-center justify-content-center fw-bold fs-4">
-              J
+              {user.fullname[0].toUpperCase()}
             </div>
             <div>
               <h5 className="m-0 fw-bold tracking-wide">{user.fullname}</h5>
               <small className="text-secondary-white">
-                Current Level: {user.level}
+                Current Level: {user.currentlevel}
               </small>
             </div>
           </div>
@@ -64,50 +64,59 @@ const LevelSelection = ({ user, handleLogout }) => {
 
         {/* Levels Grid */}
         <div className="row g-4">
-          {levels.map((level) => (
-            <Link
-              to={!level.locked ? `/Game/${level.id}` : "#"}
-              key={level.id}
-              className="col-12 col-sm-6 col-md-4 col-lg-3 linkToLevelGame"
-            >
-              <div key={level.id}>
-                <div
-                  className={`level-card p-4 rounded-4 text-center h-100 d-flex flex-column justify-content-between ${level.locked ? "card-locked" : "card-active"}`}
-                >
-                  {/* Level Number Badging */}
-                  <div className="d-flex justify-content-center mb-3 position-relative">
-                    <div
-                      className={`level-number ${level.colorclass} d-flex align-items-center justify-content-center fw-bold fs-3 shadow`}
-                    >
-                      {level.id}
-                    </div>
-                    {level.locked && (
-                      <div className="lock-overlay d-flex align-items-center justify-content-center">
-                        <i className="bi bi-lock-fill fs-2"></i>
+          {levels.map((level) => {
+            // Level 1 is always unlocked (id === 1)
+            // Subsequent levels are unlocked if the user's completedlevel is >= the previous level's id
+            const isLevelLocked =
+              level.id === 1
+                ? false
+                : (user.completedlevel || 0) < level.id - 1;
+
+            return (
+              <Link
+                to={!isLevelLocked ? `/Game/${level.id}` : "#"}
+                key={level.id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3 linkToLevelGame"
+              >
+                <div>
+                  <div
+                    className={`level-card p-4 rounded-4 text-center h-100 d-flex flex-column justify-content-between ${isLevelLocked ? "card-locked" : "card-active"}`}
+                  >
+                    {/* Level Number Badging */}
+                    <div className="d-flex justify-content-center mb-3 position-relative">
+                      <div
+                        className={`level-number ${level.colorclass} d-flex align-items-center justify-content-center fw-bold fs-3 shadow`}
+                      >
+                        {level.id}
                       </div>
-                    )}
-                  </div>
+                      {isLevelLocked && (
+                        <div className="lock-overlay d-flex align-items-center justify-content-center">
+                          <i className="bi bi-lock-fill fs-2"></i>
+                        </div>
+                      )}
+                    </div>
 
-                  {/* Level Meta */}
-                  <div className="mb-3">
-                    <h5
-                      className={`m-0 fw-bold ${level.locked ? "text-muted-custom" : "text-white"}`}
-                    >
-                      {level.name}
-                    </h5>
-                    <span className="text-muted-sm d-block mt-1">
-                      {level.difficulty}
-                    </span>
-                  </div>
+                    {/* Level Meta */}
+                    <div className="mb-3">
+                      <h5
+                        className={`m-0 fw-bold ${isLevelLocked ? "text-muted-custom" : "text-white"}`}
+                      >
+                        {level.name}
+                      </h5>
+                      <span className="text-muted-sm d-block mt-1">
+                        {level.difficulty}
+                      </span>
+                    </div>
 
-                  {/* Reward Footer */}
-                  <div className="star-badge py-2 px-3 rounded-3 mt-auto d-flex align-items-center justify-content-center gap-1">
-                    <span className="star-icon">⭐</span> {level.stars}
+                    {/* Reward Footer */}
+                    <div className="star-badge py-2 px-3 rounded-3 mt-auto d-flex align-items-center justify-content-center gap-1">
+                      <span className="star-icon">⭐</span> {level.stars}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
