@@ -1,0 +1,184 @@
+/* Custom properties for consistency */
+:root {
+  --bg-gradient: linear-gradient(135deg, #1b072c 0%, #32105c 50%, #4c116c 100%);
+  --card-bg-active: rgba(255, 255, 255, 0.07);
+  --card-bg-locked: rgba(255, 255, 255, 0.03);
+  --card-border-active: rgba(255, 255, 255, 0.15);
+  --card-border-locked: rgba(255, 255, 255, 0.05);
+  --btn-bg-blur: rgba(255, 255, 255, 0.1);
+}
+
+/* Background canvas setup */
+.game-bg {
+  background: var(--bg-gradient);
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.max-width-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.logo-text {
+  font-size: calc(1.8rem + 0.5vw);
+}
+
+/* Navigation Buttons override */
+.btn-custom {
+  background-color: var(--btn-bg-blur);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  font-size: 0.9rem;
+}
+.btn-custom:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: black !important;
+}
+.btn-logout {
+  background-color: #e52521 !important;
+  border: none;
+  font-size: 0.9rem;
+}
+.btn-logout:hover {
+  background-color: #b81d1a !important;
+}
+
+/* User Status Bar */
+.user-status-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border-active);
+  backdrop-filter: blur(10px);
+}
+
+.avatar-box {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #5956f7 0%, #a336ff 100%);
+  border-radius: 12px;
+}
+
+.text-secondary-white {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.coin-badge {
+  background: linear-gradient(90deg, #f39c12 0%, #f1c40f 100%);
+  color: #1b072c;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+}
+.coin-amount {
+  color: #fff;
+}
+
+/* Level Cards Layout */
+.level-card {
+  backdrop-filter: blur(5px);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.card-active {
+  background: var(--card-bg-active);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.card-active:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(163, 54, 255, 0.25);
+}
+
+.card-locked {
+  background: var(--card-bg-locked);
+  border: 1px solid var(--card-border-locked);
+  opacity: 0.4;
+  pointer-events: none; /* Prevents clicks on locked levels */
+}
+
+/* Color palettes inside cards */
+.level-number {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+}
+
+.bg-green {
+  background: #2ecc71;
+}
+.bg-orange {
+  background: #e67e22;
+}
+.bg-blue {
+  background: #3498db;
+}
+.bg-purple {
+  background: #9b59b6;
+}
+.bg-light-blue {
+  background: #1abc9c;
+}
+.bg-indigo {
+  background: #34495e;
+}
+.bg-red {
+  background: #e74c3c;
+}
+.bg-dark-red {
+  background: #c0392b;
+}
+
+/* Custom Text and Overlays */
+.text-muted-custom {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.text-muted-sm {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.star-badge {
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  width: 100%;
+}
+
+.card-active .star-badge {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffd700;
+}
+
+/* Tracking Adjustments */
+.tracking-wide {
+  letter-spacing: 0.5px;
+}
+a.col-12.col-sm-6.col-md-4.col-lg-3 {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Mobile responsive fixes */
+@media (max-width: 576px) {
+  .flex-col {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .flex-col > .d-flex {
+    justify-content: space-between;
+    width: 100%;
+  }
+}
