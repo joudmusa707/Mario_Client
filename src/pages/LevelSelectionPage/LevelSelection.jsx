@@ -2,7 +2,7 @@ import React from "react";
 import "./LevelSelection.css"; // Importing the external CSS
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-const LevelSelection = ({ user }) => {
+const LevelSelection = ({ user, handleLogout }) => {
   const [levels, setLevels] = React.useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/api/levels")
@@ -30,11 +30,13 @@ const LevelSelection = ({ user }) => {
             >
               <i className="bi bi-person me-2"></i>Profile
             </Link>
-            <Link
-              to="/"
-              className="btn btn-danger btn-logout px-3 py-2 fw-semibold"
-            >
-              <i className="bi bi-box-arrow-right me-2"></i>Logout
+            <Link to="/">
+              <button
+                className="btn btn-danger btn-logout px-3 py-2 fw-semibold"
+                onClick={handleLogout}
+              >
+                <i className="bi bi-box-arrow-right me-2"></i>Logout
+              </button>
             </Link>
           </div>
         </div>

@@ -25,6 +25,11 @@ function App() {
     localStorage.setItem("user", JSON.stringify(userData));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   if (loading) {
     return <div className="text-white text-center mt-5">Loading app...</div>;
   }
@@ -58,7 +63,11 @@ function App() {
           <Route
             path="/LevelSelection"
             element={
-              user ? <LevelSelection user={user} /> : <Navigate to="/Login" />
+              user ? (
+                <LevelSelection user={user} handleLogout={handleLogout} />
+              ) : (
+                <Navigate to="/Login" />
+              )
             }
           />
         </Routes>
