@@ -26,6 +26,7 @@ import spriteStandRightAsset from "../assets/spriteStandRight.png";
 import backgroundImgAsset from "../assets/background.png";
 import hillsImgAsset from "../assets/hills.png";
 import enemyImgAsset from "../assets/enemy.png";
+import Score from "../components/Score/Score.jsx";
 
 const levels = [
   createLevel1,

@@ -75,11 +75,12 @@ const leaderboardPage = () => {
                       </h5>
                       <div className="d-flex align-items-center gap-3 mt-1 text-secondary-white small-meta">
                         <span>
-                          <i className="bi bi-star"></i> Level {player.level}
+                          <i className="bi bi-star"></i> Level{" "}
+                          {player.currentlevel}
                         </span>
                         <span>
                           <i className="bi bi-check-circle"></i>{" "}
-                          {player.completeCount || 0} Complete
+                          {player.completedlevel} Complete
                         </span>
                       </div>
                     </div>
