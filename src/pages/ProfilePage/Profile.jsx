@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom";
 import "./Profile.css";
+import { useEffect, useState } from "react";
 const Profile = ({ user, handleLogout }) => {
+  const [achievements, setAchievements] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/users/${user.id}/achievements`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to pull achievements data");
+        return res.json();
+      })
+      .then((data) => {
+        setAchievements(data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error gathering profile achievements:", err);
+        setIsLoading(false);
+      });
+  }, [user.id]);
+  const unlockedCount = achievements.filter((ach) => ach.isUnlocked).length;
   return (
     <div className="game-bg min-vh-100 text-white py-4 px-3 px-md-5 d-flex flex-column align-items-center">
       <div className="container-fluid max-width-profile position-relative d-flex flex-column gap-4">
@@ -106,97 +126,62 @@ const Profile = ({ user, handleLogout }) => {
           </div>
         </div>
 
-        {/* Achievements Block Container */}
+        {/* Dynamic Achievements Block Container */}
         <div className="profile-master-card p-4 rounded-4 w-100">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h4 className="fw-bold m-0 d-flex align-items-center gap-2 block-title">
               <i className="bi bi-trophy text-warning"></i> Achievements
             </h4>
             <span className="badge achievement-counter-badge px-3 py-2 rounded-pill">
-              0/6 Unlocked
+              {isLoading ? "..." : `${unlockedCount}/${achievements.length}`}{" "}
+              Unlocked
             </span>
           </div>
 
-          {/* 3x2 Grid Matrix of Achievement Items */}
-          <div className="row g-3">
-            {/* Item 1 */}
-            <div className="col-12 col-sm-6 col-md-4">
-              <div className="achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center locked-state">
-                <div className="achievement-icon-placeholder mb-3">
-                  <i className="bi bi-award"></i>
-                </div>
-                <h6 className="fw-bold m-0 text-white">First Steps</h6>
-                <small className="text-secondary-white mt-1">
-                  Complete Level 1
-                </small>
-              </div>
+          {/* Loader or dynamic listing output matrix mapping split */}
+          {isLoading ? (
+            <div className="text-center py-4 text-secondary-white">
+              Loading Achievements...
             </div>
-
-            {/* Item 2 */}
-            <div className="col-12 col-sm-6 col-md-4">
-              <div className="achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center locked-state">
-                <div className="achievement-icon-placeholder mb-3">
-                  <i className="bi bi-award"></i>
+          ) : (
+            <div className="row g-3">
+              {achievements.map((achievement) => (
+                <div key={achievement.id} className="col-12 col-sm-6 col-md-4">
+                  <div
+                    className={`achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center ${
+                      achievement.isUnlocked
+                        ? "unlocked-state text-warning"
+                        : "locked-state option-muted"
+                    }`}
+                  >
+                    <div className="achievement-icon-placeholder mb-3">
+                      <i
+                        className={`bi ${
+                          achievement.isUnlocked
+                            ? "bi-patch-check text-warning fs-3 animate-pulse"
+                            : "bi-lock-fill text-muted"
+                        }`}
+                      ></i>
+                    </div>
+                    <h6
+                      className={`fw-bold m-0 ${achievement.isUnlocked ? "text-warning" : "text-muted"}`}
+                    >
+                      {achievement.title}
+                    </h6>
+                    <small
+                      className={
+                        achievement.isUnlocked
+                          ? "text-white"
+                          : "text-secondary-white"
+                      }
+                    >
+                      {achievement.description}
+                    </small>
+                  </div>
                 </div>
-                <h6 className="fw-bold m-0 text-white">Coin Collector</h6>
-                <small className="text-secondary-white mt-1">
-                  Collect 100 coins
-                </small>
-              </div>
+              ))}
             </div>
-
-            {/* Item 3 */}
-            <div className="col-12 col-sm-6 col-md-4">
-              <div className="achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center locked-state">
-                <div className="achievement-icon-placeholder mb-3">
-                  <i className="bi bi-award"></i>
-                </div>
-                <h6 className="fw-bold m-0 text-white">Explorer</h6>
-                <small className="text-secondary-white mt-1">
-                  Complete 3 levels
-                </small>
-              </div>
-            </div>
-
-            {/* Item 4 */}
-            <div className="col-12 col-sm-6 col-md-4">
-              <div className="achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center locked-state">
-                <div className="achievement-icon-placeholder mb-3">
-                  <i className="bi bi-award"></i>
-                </div>
-                <h6 className="fw-bold m-0 text-white">Champion</h6>
-                <small className="text-secondary-white mt-1">
-                  Reach Level 5
-                </small>
-              </div>
-            </div>
-
-            {/* Item 5 */}
-            <div className="col-12 col-sm-6 col-md-4">
-              <div className="achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center locked-state">
-                <div className="achievement-icon-placeholder mb-3">
-                  <i className="bi bi-award"></i>
-                </div>
-                <h6 className="fw-bold m-0 text-white">Master</h6>
-                <small className="text-secondary-white mt-1">
-                  Complete all levels
-                </small>
-              </div>
-            </div>
-
-            {/* Item 6 */}
-            <div className="col-12 col-sm-6 col-md-4">
-              <div className="achievement-box p-4 rounded-4 text-center d-flex flex-column align-items-center justify-content-center locked-state">
-                <div className="achievement-icon-placeholder mb-3">
-                  <i className="bi bi-award"></i>
-                </div>
-                <h6 className="fw-bold m-0 text-white">Wealthy</h6>
-                <small className="text-secondary-white mt-1">
-                  Collect 500 coins
-                </small>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

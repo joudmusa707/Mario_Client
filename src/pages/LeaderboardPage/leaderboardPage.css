@@ -112,6 +112,7 @@
 /* Text Meta Properties */
 .player-name {
   font-size: 1.15rem;
+  display: flex;
   font-weight: 600;
 }
 
