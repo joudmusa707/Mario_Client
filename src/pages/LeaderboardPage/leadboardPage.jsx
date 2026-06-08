@@ -7,7 +7,12 @@ const leaderboardPage = () => {
   useEffect(() => {
     fetch("http://localhost:3000/api/users")
       .then((response) => response.json())
-      .then((data) => setPlayers(data))
+      .then((data) => {
+        const sortedData = data.sort(
+          (a, b) => b.coincollected - a.coincollected,
+        );
+        setPlayers(sortedData);
+      })
       .catch((error) => console.error("Error fetching players:", error));
   }, []);
 
@@ -47,9 +52,9 @@ const leaderboardPage = () => {
               const rank = index + 1;
               let rankBadgeClass = "rank-default";
 
-              if (rank === 1) rankBadgeClass = "rank-gold";
-              if (rank === 2) rankBadgeClass = "rank-silver";
-              if (rank === 3) rankBadgeClass = "rank-bronze";
+              if (rank === 1) rankBadgeClass = "rank-bronze";
+              if (rank === 2) rankBadgeClass = "rank-gold";
+              if (rank === 3) rankBadgeClass = "rank-silver";
 
               return (
                 <div
