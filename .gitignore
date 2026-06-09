@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+#removing the env from pushing it to github
+.env
+.env.local
 
 # Editor directories and files
 .vscode/*
