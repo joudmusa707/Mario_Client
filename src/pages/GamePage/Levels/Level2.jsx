@@ -15,34 +15,45 @@ const Level2 = ({
     new GenericObject({ x: 0, y: 0, image: hillsImg }),
   ];
 
+  // Base platform width helper to keep math clean
+  const pWidth = platformImg.width;
+
   const platforms = [
+    // Starting Ground
     new Platform(-1, 470, platformImg),
 
-    new Platform(platformImg.width + 100, 470, platformImg),
+    // Second platform: Just a clean 120px gap from the first one
+    new Platform(pWidth + 120, 470, platformImg),
 
-    new Platform(platformImg.width * 2 + 350, 420, platformImg),
+    // Third platform: Slightly elevated, 150px gap
+    new Platform(pWidth * 2 + 270, 420, platformImg),
 
-    new Platform(platformImg.width * 3 + 700, 350, platformImg),
+    // Fourth platform: Step up, keeping the gap to a safe 160px
+    new Platform(pWidth * 3 + 430, 370, platformImg),
 
-    new Platform(platformImg.width * 4 + 900, 470, platformImg),
+    // Fifth platform: Dropping back down, 150px gap
+    new Platform(pWidth * 4 + 580, 470, platformImg),
 
+    // Floating small step 1: Tight 130px gap to jump onto the pillar
     new Platform(
-      platformImg.width * 5 + 1200,
-      300,
+      pWidth * 5 + 710,
+      380, // Lowered from 300 to 380 so it's a manageable vertical step
       platformSmallTallImg,
       80,
       80,
     ),
 
+    // Floating small step 2: 120px jump from the previous pillar
     new Platform(
-      platformImg.width * 5 + 1450,
-      250,
+      pWidth * 5 + 910,
+      300, // Safe gradual climb up from 380
       platformSmallTallImg,
       80,
       80,
     ),
 
-    new Platform(platformImg.width * 6 + 1400, 350, platformImg),
+    // Final Level Run: Landing pad after the pillars
+    new Platform(pWidth * 5 + 1110, 380, platformImg),
   ];
 
   const coins = [];
@@ -56,12 +67,13 @@ const Level2 = ({
     );
   });
 
+  // Positioned the enemy dynamically onto the 5th platform layout
   const enemies = [
     new Enemy({
-      x: 1800,
-      y: 420 - 50,
+      x: pWidth * 4 + 650,
+      y: 470 - 50,
       image: enemyImg,
-      distance: 300,
+      distance: 200,
     }),
   ];
 
@@ -70,7 +82,7 @@ const Level2 = ({
     platforms,
     coins,
     enemies,
-    winOffset: 5000,
+    winOffset: pWidth * 5 + 1110, // Adjusted dynamically based on your new track length
   };
 };
 

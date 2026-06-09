@@ -1,26 +1,44 @@
-import { useState } from "react";
+import { useState, useRef } from "react"; // 1. Import useRef
 import Canvas from "../../components/Canvas/Canvas.jsx";
 import Score from "../../components/Score/Score.jsx";
 import Lives from "../../components/Lives/Lives.jsx";
 import GameOverlay from "../../components/OverLayCard/OverLayCard.jsx";
 import "./GameUI.css";
-const GameUI = () => {
+import { useParams } from "react-router-dom";
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
+const GameUI = ({ user, onUserUpdate }) => {
+  const { id } = useParams();
+  const levelIndex = parseInt(id) - 1;
+
   const [score, setScore] = useState(0);
+  // 2. Maintain an exact snapshot reference of the score
+  const scoreRef = useRef(0);
+
   const [lives, setLives] = useState(3);
   const [gameState, setGameState] = useState("playing");
-  const [currentLevel, setCurrentLevel] = useState(0);
 
-  // Reset function for coins/score
+  // 3. Keep state and ref synchronous
   const handleScoreReset = () => {
     setScore(0);
+    scoreRef.current = 0;
   };
 
   const handleCoinCollect = (coins) => {
-    setScore((prev) => prev + coins);
+    setScore((prev) => {
+      const newScore = prev + coins;
+      scoreRef.current = newScore; // Keep tracking register fresh
+      return newScore;
+    });
   };
 
   const handleEnemyKill = (points = 50) => {
-    setScore((prev) => prev + points);
+    setScore((prev) => {
+      const newScore = prev + points;
+      scoreRef.current = newScore; // Keep tracking register fresh
+      return newScore;
+    });
   };
 
   const handlePlayerDeath = () => {
@@ -35,55 +53,77 @@ const GameUI = () => {
     handleScoreReset();
   };
 
-  const handleWin = () => {
+  const handleWin = async () => {
     setGameState("win");
-  };
-  const handleNextLevel = () => {
-    setCurrentLevel((prev) => {
-      if (prev < 5) {
-        return prev + 1;
+
+    try {
+      const activeUser = user || JSON.parse(localStorage.getItem("user"));
+      if (!activeUser) return;
+
+      const currentPlayedLevelId = levelIndex + 1;
+
+      // 4. Send the completely accurate, unstale value from your ref!
+      console.log("Saving score:", scoreRef.current);
+
+      const res = await fetch(`${BASE_URL}/api/users/${activeUser.id}/win`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          additionalCoins: scoreRef.current, // Always fresh
+          currentPlayedLevelId: currentPlayedLevelId,
+        }),
+      });
+
+      if (res.ok) {
+        const updatedUser = await res.json();
+        onUserUpdate(updatedUser);
       }
-
-      return prev;
-    });
-
-    setScore(0);
-
-    setLives(3);
-
-    setGameState("playing");
+    } catch (err) {
+      console.error("Failed to save level progress and coins:", err);
+    }
   };
 
   const resetGame = () => {
-    setScore(0);
-
+    handleScoreReset();
     setLives(3);
-
     setGameState("playing");
   };
 
   return (
-    <div className="gameUI-parent-container">
-      <Score score={score} />
-      <Lives lives={lives} />
-      <div className="game-container">
+    <div className="gameUI-parent-container d-flex flex-column align-items-center justify-content-center p-3">
+      <div className="back-btn-row w-100 d-flex justify-content-start px-4">
+        <button
+          className="game-back-btn"
+          aria-label="Go back"
+          onClick={() => window.history.back()}
+        >
+          <i className="bi bi-arrow-left"></i>
+        </button>
+      </div>
+      <div className="hud-header d-flex justify-content-between align-items-center w-100 px-4">
+        <Score score={score} />
+        <Lives lives={lives} />
+      </div>
+      <div className="game-container w-100 d-flex justify-content-center align-items-center">
         {gameState !== "playing" && (
           <GameOverlay
             gameState={gameState}
             score={score}
             onRestart={resetGame}
-            onNextLevel={handleNextLevel}
           />
         )}
-        <Canvas
-          gameState={gameState}
-          currentLevel={currentLevel}
-          onCoinCollect={handleCoinCollect}
-          onEnemyKill={handleEnemyKill}
-          onPlayerDeath={handlePlayerDeath}
-          onWin={handleWin}
-          onScoreReset={handleScoreReset}
-        />
+
+        <div className="canvas-wrapper position-relative">
+          <Canvas
+            gameState={gameState}
+            currentLevel={levelIndex}
+            onCoinCollect={handleCoinCollect}
+            onEnemyKill={handleEnemyKill}
+            onPlayerDeath={handlePlayerDeath}
+            onWin={handleWin}
+            onScoreReset={handleScoreReset}
+          />
+        </div>
       </div>
     </div>
   );

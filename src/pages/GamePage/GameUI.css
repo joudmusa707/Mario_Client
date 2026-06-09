@@ -1,12 +1,106 @@
+/* Base Layout Setup */
 .gameUI-parent-container {
-  background-color: #222;
-  height: 100vh;
+  background-color: #11141a;
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+  overflow: hidden;
+  position: relative;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Dedicated row container for the back button */
+.back-btn-row {
+  margin-bottom: 2px; /* Small clean spacing before metrics drop below it */
+}
+
+/* Full-width HUD containing Score and Hearts */
+.hud-header {
+  z-index: 10;
+  position: relative;
+  max-width: 100%;
+  margin-bottom: 24px;
+  user-select: none;
+}
+
+/* Centralized container holding the canvas */
+.game-container {
+  position: relative;
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px;
-  overflow: hidden;
+  width: 100%;
 }
-.game-container {
-  position: relative;
+
+/* Canvas Responsiveness Wrapper */
+.canvas-wrapper {
+  max-width: 100%;
+  max-height: calc(
+    100vh - 160px
+  ); /* Slightly increased offset for the double row top */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Inside Canvas Rendering Controller */
+.canvas-wrapper canvas {
+  max-width: 100%;
+  height: auto !important;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+  border-radius: 16px;
+}
+
+/* Back Button Glassmorphism Style - FIXED: Removed absolute position entirely */
+.game-back-btn {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.game-back-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.game-back-btn:active {
+  transform: scale(0.95);
+}
+
+/* Responsive adjustment for small mobile viewports */
+@media (max-width: 576px) {
+  .game-back-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+/* Mobile Screens Smooth Scaling */
+@media (max-width: 768px) {
+  .hud-header {
+    margin-bottom: 12px;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+  .back-btn-row {
+    padding-left: 12px !important;
+  }
 }
