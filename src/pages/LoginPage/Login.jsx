@@ -26,9 +26,9 @@ const Login = ({ onLogin }) => {
   return (
     <div className="signin-wrapper d-flex align-items-center justify-content-center p-3">
       {/* Back Button */}
-      <button className="back-btn" aria-label="Go back">
+      <Link to="/Home" className="back-btn" aria-label="Go back">
         <i className="bi bi-arrow-left"></i>
-      </button>
+      </Link>
 
       {/* Glassmorphic Form Container */}
       <div className="glass-card p-4 p-sm-5 text-center">
