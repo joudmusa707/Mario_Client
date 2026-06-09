@@ -26,7 +26,7 @@ const Login = ({ onLogin }) => {
   return (
     <div className="signin-wrapper d-flex align-items-center justify-content-center p-3">
       {/* Back Button */}
-      <Link to="/home" className="back-btn" aria-label="Go back">
+      <Link to="/" className="back-btn" aria-label="Go back">
         <i className="bi bi-arrow-left"></i>
       </Link>
 
