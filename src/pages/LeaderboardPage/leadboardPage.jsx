@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./leaderboardPage.css";
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const leaderboardPage = () => {
   const [players, setPlayers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/users")
+    fetch(`${BASE_URL}/api/users`)
       .then((response) => response.json())
       .then((data) => {
         const sortedData = data.sort(

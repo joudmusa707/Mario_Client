@@ -2,10 +2,13 @@ import React from "react";
 import "./LevelSelection.css"; // Importing the external CSS
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const LevelSelection = ({ user, handleLogout }) => {
   const [levels, setLevels] = React.useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/api/levels")
+    fetch(`${BASE_URL}/api/levels`)
       .then((response) => response.json())
       .then((data) => setLevels(data))
       .catch((error) => console.error("Error fetching levels:", error));

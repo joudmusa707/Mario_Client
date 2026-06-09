@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import "./Profile.css";
 import { useEffect, useState } from "react";
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const Profile = ({ user, handleLogout }) => {
   const [achievements, setAchievements] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/users/${user.id}/achievements`)
+    fetch(`${BASE_URL}/api/users/${user.id}/achievements`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to pull achievements data");
         return res.json();

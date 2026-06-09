@@ -11,6 +11,9 @@ import LevelSelection from "./pages/LevelSelectionPage/LevelSelection.jsx";
 import Leaderboard from "./pages/LeaderboardPage/leadboardPage.jsx";
 import Profile from "./pages/ProfilePage/Profile.jsx";
 import Settings from "./pages/SettingsPage/Settings.jsx";
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,7 +45,7 @@ function App() {
     // CASE 1: Delete Account
     if (updateData.deleteAccount) {
       try {
-        await fetch(`http://localhost:3000/api/users/${user.id}`, {
+        await fetch(`${BASE_URL}/api/users/${user.id}`, {
           method: "DELETE",
         });
         handleLogout();
@@ -55,16 +58,13 @@ function App() {
     // // CASE 2: Reset Progress
     if (updateData.resetProgress) {
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/users/${user.id}/progress`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              resetProgress: true,
-            }),
-          },
-        );
+        const res = await fetch(`${BASE_URL}/api/users/${user.id}/progress`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            resetProgress: true,
+          }),
+        });
         if (!res.ok) {
           throw new Error("Failed to reset progress on server");
         }
@@ -80,7 +80,7 @@ function App() {
     // // CASE 3: Standard Profile Information Update (Full Name / Email)
     if (updateData.fullname !== undefined || updateData.email !== undefined)
       try {
-        const res = await fetch(`http://localhost:3000/api/users/${user.id}`, {
+        const res = await fetch(`${BASE_URL}/api/users/${user.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

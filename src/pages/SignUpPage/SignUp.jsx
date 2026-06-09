@@ -1,7 +1,8 @@
 import "./SignUp.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 const SignUp = ({ onSignUp }) => {
   const [fullname, setFullname] = useState("");
@@ -17,7 +18,7 @@ const SignUp = ({ onSignUp }) => {
       password,
     };
     try {
-      const res = await fetch("http://localhost:3000/api/auth/signup", {
+      const res = await fetch(`${BASE_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

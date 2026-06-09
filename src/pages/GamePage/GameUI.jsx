@@ -6,6 +6,8 @@ import GameOverlay from "../../components/OverLayCard/OverLayCard.jsx";
 import "./GameUI.css";
 import { useParams } from "react-router-dom";
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 const GameUI = ({ user, onUserUpdate }) => {
   const { id } = useParams();
   const levelIndex = parseInt(id) - 1;
@@ -63,17 +65,14 @@ const GameUI = ({ user, onUserUpdate }) => {
       // 4. Send the completely accurate, unstale value from your ref!
       console.log("Saving score:", scoreRef.current);
 
-      const res = await fetch(
-        `http://localhost:3000/api/users/${activeUser.id}/win`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            additionalCoins: scoreRef.current, // Always fresh
-            currentPlayedLevelId: currentPlayedLevelId,
-          }),
-        },
-      );
+      const res = await fetch(`${BASE_URL}/api/users/${activeUser.id}/win`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          additionalCoins: scoreRef.current, // Always fresh
+          currentPlayedLevelId: currentPlayedLevelId,
+        }),
+      });
 
       if (res.ok) {
         const updatedUser = await res.json();

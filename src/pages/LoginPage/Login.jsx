@@ -2,13 +2,14 @@ import "./Login.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+const BASE_URL = import.meta.env.VITE_SERVER_URL;
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch(`${BASE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
